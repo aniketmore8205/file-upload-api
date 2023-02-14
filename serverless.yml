@@ -1,35 +1,33 @@
-service: s3-file-uploader
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: file-upload-api
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
+   stage: dev
   region: us-west-1
 
 custom:
   fileUploadBucketName: ${self:service}-bucket-${self:provider.stage}
-
-plugins:
-  - serverless-iam-roles-per-function
-
-functions:
-  s3FileUploader:
-    handler: src/upload.handler
-    name: s3-file-uploader
-    description: A lambda handler that uploads a file to an S3 bucket based on an API Gateway trigger.
-    timeout: 60 # seconds
-    memorySize: 128 # mb
-    events:
-      - http:
-          path: images
-          method: POST
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - "s3:Put*"
-        Resource: arn:aws:s3:::${self:custom.fileUploadBucketName}/*
-    environment:
-      FILE_UPLOAD_BUCKET_NAME: ${self:custom.fileUploadBucketName}
 
 resources:
   Resources:
