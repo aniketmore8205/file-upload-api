@@ -58,5 +58,3 @@ resources:
       Properties:
         BucketName: ${self:custom.fileUploadBucketName}
         AccessControl: PublicRead
-plugins:
-  - serverless-iam-roles-per-function
